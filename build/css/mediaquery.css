@@ -1,0 +1,120 @@
+@media (min-width: 320px) and (max-width: 990px) {
+  .fv-chart {
+    border-bottom-left-radius: 3px;
+    border-top-right-radius: 0px;
+  }
+  .header-fv {
+    border-top-right-radius: 3px;
+  }
+  .triangle-ind:after {
+    border-color: none;
+    border-style: none;
+  }
+  .text-ticker {
+    padding-bottom: 10px;
+  }
+}
+@media (min-width: 320px) and (max-width: 990px) and (min-width: 1200px) {
+  .logo-bursanet {
+    margin: 6% 0 0 33.5%;
+  }
+  .descripcion {
+    margin-top: 20%;
+  }
+  .form-login {
+    margin-top: 18%;
+  }
+  .inp-log {
+    margin-left: 150px;
+  }
+}
+@media (min-width: 320px) and (max-width: 990px) and (min-width: 990px) and (max-width: 1200px) {
+  .logo-bursanet {
+    margin: 6% 0 0% 29.5%;
+  }
+  .descripcion {
+    margin-top: 25%;
+  }
+  .form-login {
+    margin-top: 23%;
+  }
+  .inp-log {
+    margin-left: 120px;
+  }
+}
+@media (min-width: 320px) and (max-width: 990px) and (min-width: 768px) and (max-width: 990px) {
+  .logo-bursanet {
+    margin: 3% 0 3% 0;
+  }
+  .descripcion {
+    margin-top: 1%;
+  }
+  .form-login {
+    margin-top: 3%;
+  }
+  .rec-contrasena {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  .logo-mobile {
+    background: url("bursanet.png") no-repeat;
+    width: 180px;
+    height: 50px;
+    margin: 2% auto 0.5% auto;
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    -o-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  .text-inversion {
+    padding-bottom: 20px;
+    font-size: 0.85em;
+  }
+}
+@media (min-width: 320px) and (max-width: 990px) and (min-width: 420px) and (max-width: 768px) {
+  .rec-contrasena {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  .logo-mobile {
+    background: url("bursanet.png") no-repeat;
+    width: 180px;
+    height: 50px;
+    margin: 5% auto 1% auto;
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    -o-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  .text-inversion {
+    padding-bottom: 20px;
+    font-size: 0.8em;
+  }
+}
+@media (min-width: 320px) and (max-width: 990px) and (min-width: 320px) and (max-width: 420px) {
+  .form-login {
+    border: none;
+    box-shadow: none;
+  }
+  .rec-contrasena {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  .logo-mobile {
+    background: url("bursanet.png") no-repeat;
+    width: 180px;
+    height: 50px;
+    margin: 8% auto 1% auto;
+    -webkit-transform: scale(0.8);
+    -moz-transform: scale(0.8);
+    -ms-transform: scale(0.8);
+    -o-transform: scale(0.8);
+    transform: scale(0.8);
+  }
+  .text-inversion {
+    padding-bottom: 20px;
+    font-size: 0.8em;
+  }
+}

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html ng-controller="principalCtrl"  >
+
+<head>
+    <title>Bursanet</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=10" />
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+    <body>
+
+
+        <!-- Header -->
+        <header>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4 col-md-3 col-sm-2 col-xs-2">
+                        <img id="logo-bursanet" src="img/bursanet.png" alt="Bursanet" />
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-5 col-xs-4">
+                        <div class="btn-group contract" ng-show="menuOn">
+                            <button class="btn mycontract hidden-xs btn-xs" style="cursor: default;">Mi contrato:</button>
+                            <button type="button" class="btn btn-contracts btn-xs dropdown-toggle mobile-tog" id="dropdownContracts" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <b id="idContract">{{contratoSel.aliasContrato | limitTo: 12 }}</b> <span>{{contratoSel.idContrato}}</span>
+                                <span ng-show="!contratoSel">Selecciona un contrato</span><span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" id="contactList" role="menu" aria-labelledby="dropdownContracts" style="width: 69%">
+                                <li role="presentation" class="dropdown-header">Mis contratos</li>
+                                <li class="navig-contract-page" role="presentation" ng-repeat="contrato in contratos" data-Content-page="" ><a role="menuitem" tabindex="-1" ng-click="seleccionContrato(contrato);" ><b>{{contrato.aliasContrato}}</b> <span id="idContractList">{{contrato.idContrato}}</span></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="modalSesion" class="col-lg-4 col-md-5 col-sm-5 col-xs-6 pull-right">
+                        <div class="col-md-11 col-sm-10 col-xs-10 info-sesion">
+                            <p class="text-right text-sesion">
+                                {{date | date:'EEEE d'}} de {{date | date:'MMMM'}} de {{date | date:'yyyy'}} <span>|</span> {{ clock | date:'hh:mm a'}}
+                            </p>
+                            <div class="text-right text-sesion">
+                                Tu sesión caduca en
+                                <div id="timer"><span id="time"></span>
+                                </div> min &nbsp;<a href="javascript:;" ng-click="refreshSession()"><i class="fa fa-refresh"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-md-1 col-sm-2 col-xs-2 off-sesion pull-right">
+                            <a href="javascript:;"><i class="fa fa-power-off btn-close-sesion"  data-toggle="modal" data-target="#close-sesion"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="navigation" ng-show="menuOn">
+                <div class="navigation-container container">
+                    <ul class="nav-menu nav-menu-ul">
+                        <li class="nav-menu"><a class="nav-menu" href="#/indexprivado"ng-click="cierraWS();">MI CUENTA</a>
+                        </li>
+                        <li class="nav-menu" ng-click="navegar('/portafolio')"><a class="nav-menu" href="javascript:;">MI PORTAFOLIO</a>
+                        </li>
+                        <li class="nav-menu"><a class="nav-menu" href="javascript:;">INVERSIONES</a>
+                            <ul>
+                                <li ng-show="menuPermissions.FondosMenu" ng-click="navegar('/fondosdeInversion')"><a href="javascript:;">Fondos de Inversion</a></li>
+                                <li ng-show="menuPermissions.MerCapMenu" ng-click="navegar('/capitales')"><a href="javascript:;">Mercado de Capitales</a></li>
+                                <li ng-show="menuPermissions.MercDinMenu" ng-click="navegar('/mercadodeDinero')"><a href="javascript:;">Mercado de Dinero</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-menu"><a class="nav-menu" href="javascript:;">IDEAS DE INVERSI&Oacute;N </a>
+                          <ul>
+                              <li ng-click="navegar('/ideasdeInversion')"><a href="javascript:;">Ideas de inversion</a></li>
+                              <!--li ng-click="navegar('/panorama')"><a href="javascript:;">Panorama</a></li-->
+                          </ul>
+                        </li>
+
+                        <li ng-show="menuPermissions.TraspasosMenu" class="nav-menu" ng-click="navegar('/transferencias')"><a class="nav-menu" href="javascript:;">TRANSFERENCIAS </a>
+                        </li>
+
+                        <li class="nav-menu" ng-click="navegar('/configuracion')"><a class="nav-menu" href="javascript:;">CONFIGURACI&Oacute;N </a>
+                        </li>
+                        <li class="nav-menu" ng-click="contactoBursanet();"><a class="nav-menu" href="javascript:;" class="line">CONTACTO</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <!-- End Header -->
+        <div class="clearfix"></div>
+
+        <!-- BREADCRUMBS-->
+        <div class="container" id="breadcrumbsPrincipal">
+            <div class="row">
+                <div class="breadcrumbs-navigation">
+                    <div class="col-md-6 col-sm-6">
+                        <div ncy-breadcrumb></div>
+                    </div>
+                    <div class="col-md-6 col-sm-6">
+
+                      <div class="pull-right links-header" ng-hide="state.current.name == 'ideasdeInversion' || state.current.name == 'capitales' ">
+                        <a class="linkBursanet" href="https://www.actinver.com/webcenter/portal/CentrodeInformacionBursatilActinver" target="_blank">ANÁLISIS BURSÁTIL</a>
+                        <span>|</span>
+                        <a href="javascript:;" class="linkBursanet" ng-click="navegar('/ideasdeInversion')">IDEAS DE INVERSIÓN</a>
+                        <span>|</span>
+                        <a class="linkBursanet" href="https://www.actinver.com/webcenter/portal/CEF" target="_blank">CEF</a>
+                        <span>|</span>
+                        <a class="linkBursanet" href="https://www.actinver.com/webcenter/portal/Actinver/Foro%20Bursanet?_collectionctrl={{clientIdForoBur}}.{{accesToken}}" target="_blank">FORO</a>
+                      </div>
+
+                      <div class="pull-right links-header" ng-show="state.current.name == 'capitales'">
+                        <a class="linkBursanet" href="https://www.actinver.com/webcenter/portal/CentrodeInformacionBursatilActinver" target="_blank">ANÁLISIS BURSÁTIL</a>
+                        <span>|</span>
+                        <a class="linkBursanet" href="javascript:;" ng-click="infosel();">INFOSEL</a>
+                        <span>|</span>
+                        <a href="javascript:;" class="linkBursanet" ng-click="navegar('/ideasdeInversion')">IDEAS DE INVERSIÓN</a>
+                        <span>|</span>
+                        <a class="linkBursanet" href="https://www.actinver.com/webcenter/portal/CEF" target="_blank">CEF</a>
+                        <span>|</span>
+                        <a class="linkBursanet" href="https://www.actinver.com/webcenter/portal/Actinver/Foro%20Bursanet?_collectionctrl={{clientIdForoBur}}.{{accesToken}}" target="_blank">FORO</a>
+                      </div>
+
+                      <div class="pull-right links-header" ng-show="state.current.name == 'ideasdeInversion'">ANÁLISIS BURSÁTIL <span>|</span> CEF <span>|</span> FORO</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal cerrar sesion -->
+        <div class="modal fade" id="close-sesion" tabindex="-1" role="dialog" aria-labelledby="close-sesion">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body text-center">
+                        <h5 class="title-close-sesion"><i class="fa fa-lock"></i> CERRAR SESIÓN</h5>
+                        <p class="text-close-sesion">¿Esta seguro que desea cerrar su sesión?</p>
+                    </div>
+                    <div class="modal-footer btns-modal-close-sesion">
+                        <button type="button" class="btn btn-primary btn-cancelar" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary btn-cancelar" data-dismiss="modal" ng-click="logout()">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal cerrar sesion -->
+        <!-- Modal Refrescar sesión -->
+        <div class="modal fade" id="modalRefresh" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Su sesión está terminando</h4>
+                    </div>
+                    <div class="modal-body">
+                    Su sesión en Bursanet está a punto de terminar  en <span id="timeLast"></span>
+                    <br>
+                    ¿Desea salir de Bursanet o refrescar su sesión para continuar en la aplicación?
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="logout()">salir de Bursanet</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="refreshSession()">refrescar sesión</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- End Modal Refrescar sesion -->
+
+        <!-- END BREADCRUMBS-->
+
+        <main>
+            <article>
+                <div class="content grid-container">
+                    <div ui-view></div>
+                </div>
+            </article>
+        </main>
+
+
+        <script src='js/lib.js'></script>
+
+        <script>
+            var node = document.createElement("script");
+            node.type = "text/javascript";
+            node.src = 'js/bundle.js?'+ new Date().getTime();
+            document.getElementsByTagName("head")[0].appendChild(node);
+        </script>
+
+        <script src='js/highcharts.js'></script>
+        <script src='js/tablednd.js'></script>
+        <script src='js/MaskedPassword.js'></script>
+        <script src='js/angular-drag-and-drop-lists.min.js'></script>
+
+
+
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-4 col-sm-6 col-xs-6 phones-act">
+                        <p class="foot-contact">Contáctanos</p>
+                        <div class="phones">
+                            <div class="pull-left">
+                                <p>CDMX y Zona Metropolitana
+                                    <br>
+                                    <b>5268 0807</b>
+                                </p>
+                            </div>
+                            <div class="pull-right">
+                                <p>Del interior de la República
+                                    <br>
+                                    <b>01 800 990 2020</b>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-5 col-sm-6 col-xs-6 foot-info">
+                        <div class="row hidden-sm hidden-sm">
+                            <div class="col-lg-4 col-md-6 foot-links">
+                                <a href="javascript:;">AVISO DE PRIVACIDAD</a>
+                            </div>
+                            <div class="col-lg-5 col-md-6 foot-links">
+                                <a href="javascript:;">TÉRMINOS Y CONDICIONES DE USO</a>
+                            </div>
+                            <div class="col-lg-3 col-md-12 foot-links">
+                                <a href="javascript:;">GUÍA DE SERVICIO</a>
+                            </div>
+                        </div>
+
+                        <div class="visible-sm visible-sm">
+                            <div class="foot-links">
+                                <a href="javascript:;">AVISO DE PRIVACIDAD</a>
+                            </div>
+                            <div class="foot-links">
+                                <a href="javascript:;">TÉRMINOS Y CONDICIONES DE USO</a>
+                            </div>
+                            <div class="foot-links">
+                                <a href="javascript:;">GUÍA DE SERVICIO</a>
+                            </div>
+                        </div>
+
+                        <div class="info-explorer">
+                            <p>Para una óptima visualización se recomienda usar Chrome 49+ Firefox 3.x Safari 5.x</p>
+                        </div>
+                    </div>
+
+                    <a data-toggle="modal" data-target="#modalRefresh" id="mRefrescar">
+
+                    </a>
+
+                    <div class="col-md-3 col-sm-12 col-xs-12">
+                        <img src="img/logoActinver.png" alt="Actinver" class="logo-actinver-foot pull-left hidden-sm hidden-xs">
+                        <!--desktop-->
+                        <div class="copy-right pull-left hidden-sm hidden-xs">
+                            ©2016 - Derechos reservados
+                            <br> Corporación Actinver S.A.B. de C.V.
+                            <br> Guillermo González Camarena 1200
+                            <br> Centro de Cd. Santa Fe C.P. 01210, CDMX
+                        </div>
+                        <!--desktop-->
+                        <!--responsive-->
+                        <div class="copy-right pull-left visible-sm visible-xs">
+                            ©2016 - Derechos reservados Corporación Actinver S.A.B. de C.V. Guillermo González Camarena 1200 centro de Cd. Santa Fe C.P. 01210, CDMX
+                        </div>
+                        <!--responsive-->
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+        <!-- End Footer -->
+
+        <div class="modal fade modal-contacto" id="contactoModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h6 class="modal-title">CONTACTO</h6>
+              </div>
+              <div  class="modal-body">
+                <div class="row">
+
+                  <div class="col-md-4 catBursanet text-center">
+                    <h5>Centro de Atención Telefónica <br> BURSANET</h5>
+                    <p>
+                      CDMX y zona metropolitana <br>
+                      <b class="textWarning">(55)5268 0807</b>
+                    </p>
+                    <p>
+                      Interior de la república <br>
+                      <b class="textWarning">01 800 990 2020</b>
+                    </p>
+                  </div>
+
+                  <div class="col-md-4 infoHorarios text-center">
+                    <i class="fa fa-phone fa-4x"></i>
+                    <p>
+                      Horario de atención de lunes a viernes de <b>8:00 a 18:00 horas.</b>
+                    </p>
+                    <a href="mailto:bursanet@actinver.com.mx" class="mailBursanet">bursanet@actinver.com.mx</a>
+                  </div>
+
+                  <div class="col-md-4 catBursanet text-center">
+                    <h5>Centro de Atención Telefónica <br> ACTINVER</h5>
+                    <p>
+                      CDMX y zona metropolitana <br>
+                      <b class="textWarning">(55)1103 6699</b>
+                    </p>
+                    <p>
+                      Interior de la república <br>
+                      <b class="textWarning">01 800 705 5555</b>
+                    </p>
+                  </div>
+
+
+                  <div class="col-md-12">
+                    <button type="button" class="btn btn-primary marginB btn-search btn-searchOrders pull-right" data-dismiss="modal">Cerrar</button>
+                  </div>
+
+
+
+                </div>
+
+              </div>
+
+      <div class="clearfix"></div>
+            </div>
+
+
+
+          </div>
+        </div>
+
+    </body>
+
+</html>

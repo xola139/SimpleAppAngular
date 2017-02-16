@@ -1,0 +1,78 @@
+body {
+  background: #051c48;
+}
+.main-login {
+  background-color: #f5f3eb;
+}
+.logo-bursanet {
+  background: url("../img/bursanet.png") no-repeat;
+  height: 60px;
+  margin: auto;
+}
+.am-act {
+  color: #f9be00 !important;
+}
+.key {
+  margin: 8px 0 8px 0;
+}
+.text-help,
+.text-help:hover,
+.text-help:active,
+.text-help:visited {
+  font-size: 0.75em !important;
+  color: #d2cfcd;
+  cursor: pointer;
+  text-decoration: none !important;
+}
+.help-login {
+  margin: 7px auto 2px auto;
+}
+.title-app {
+  color: #f9be00;
+}
+.rec-contrasena {
+  margin-top: 5px;
+  font-size: 12px;
+  text-decoration: none;
+}
+.text-bienvenido {
+  color: #fff;
+  margin-bottom: 25px;
+}
+.text-inicio-sesion {
+  color: #f9be00;
+  margin-bottom: 25px;
+}
+.btn-continuar {
+  padding: 2px 20px !important;
+}
+.descripcion {
+  box-shadow: 1px 0px 0px #494d67;
+  height: 160px;
+}
+.text-inversion {
+  color: #fff !important;
+  letter-spacing: 1px;
+}
+.nav-login {
+  height: 35px;
+  padding: 10px 0px;
+  background: #286090;
+}
+.cuenta-bursanet {
+  font-size: 0.8em;
+  padding: 0px 12px;
+  height: 12px;
+  border-right: 1px solid #f9be00;
+}
+.cuenta-bursanet2 {
+  font-size: 0.8em;
+  padding: 0px 12px;
+  height: 12px;
+}
+.cuenta-bursanet2:hover,
+.cuenta-bursanet:hover,
+.cuenta-bursanet2:focus,
+.cuenta-bursanet:focus {
+  text-decoration: none !important;
+}
